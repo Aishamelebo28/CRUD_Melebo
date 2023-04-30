@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>CRUD💙Melebo</title>
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">♥FirstName:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Namebox"
+          />
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">♥MiddleName:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Middlenamebox"
+            />
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">♥LastName:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Lastnamebox"
+                />
+                
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">♥StudentNo:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Rollbox"
+          />
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">♥Section:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Sectionbox"
+            />
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">♥EmailAddress:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="EmailAddressbox"
+            />
+            <div class="mb-3">
+                <label  class="form-label">♥Address:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Addressbox"
+                />
+                <div class="mb-3">
+                    <label  class="form-label">♥MobileNo:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Mobilenobox"
+                    />
+                    <div class="mb-3">
+                        <label  class="form-label">♥Password:</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="Passwordbox"
+                        />
+          </div>
+          <div class="mb-3">
+            <label>⚥Gender</label> <select id="Genbox">
+                <option value="Male">♂Male</option>
+                <option value="Female">♀Female</option>
+            </select>
+            
+<hr>
+
+          </div>
+          <button type="button" class="btn btn-info" id="Insbtn">❥INSERT</button>
+          <button type="button" class="btn btn-info" id="Selbtn">❥SELECT</button>
+          <button type="button" class="btn btn-info" id="Updbtn">❥UPDATE</button>
+          <button type="button" class="btn btn-info" id="Delbtn">❥DELETE</button>
+        </div>
+       
+      </form>
+    </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+   <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyAai6tczowuv_0kf8YS12eERRGFWSOEJwE",
+  authDomain: "crudmelebo.firebaseapp.com",
+  databaseURL: "https://crudmelebo-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "crudmelebo",
+  storageBucket: "crudmelebo.appspot.com",
+  messagingSenderId: "842759356763",
+  appId: "1:842759356763:web:69f2bb5f2e170a74059a7e",
+  measurementId: "G-VCBKLLL7QV"
+};
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+
+        import {getDatabase, ref, set, child, update, remove, get}
+        from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js"
+
+        const db = getDatabase();
+
+        // references
+
+        var namebox = document.getElementById("Namebox");
+        var middlenamebox = document.getElementById("Middlenamebox");
+        var lastnamebox = document.getElementById("Lastnamebox");
+        var rollbox = document.getElementById("Rollbox");
+        var sectionbox = document.getElementById("Sectionbox");
+        var emailaddressbox = document.getElementById("EmailAddressbox");
+        var addressbox = document.getElementById("Addressbox");
+        var mobilenobox = document.getElementById("Mobilenobox");
+        var passwordbox = document.getElementById("Passwordbox");
+        var genbox = document.getElementById("Genbox");
+
+        var insBtn = document.getElementById("Insbtn")
+        var selBtn = document.getElementById("Selbtn")
+        var updBtn = document.getElementById("Updbtn")
+        var delBtn = document.getElementById("Delbtn")
+
+        // add data function
+
+        function InsertData(){
+            set(ref(db, "TheStudents/"+ rollbox.value),{
+                Nameofstd: namebox.value,
+                Middlenameofstd: middlenamebox.value,
+                Lastnameofstd: lastnamebox.value,
+                RollNo: rollbox.value,
+                Section: sectionbox.value,
+                EmailAddress: emailaddressbox.value,
+                Address: addressbox.value,
+                MobileNo: mobilenobox.value,
+                Password: passwordbox.value,
+                Gender: genbox.value
+            })
+            .then(()=>{
+                alert("data stored succesfully");
+            })
+            .catch((error)=>{
+                alert("unsuccesful, error" + error)
+            });
+        }
+
+        // select data function
+
+        function SelectData(){
+          const dbref = ref(db);
+      
+          get(child(dbref, "TheStudents/"+ rollbox.value)).then((snapshot)=>{
+              if (snapshot.exists ()){
+                    namebox.value = snapshot.val().Nameofstd;
+                    middlenamebox.value = snapshot.val().Middlenameofstd;
+                    lastnamebox.value = snapshot.val().Lastnameofstd;
+                    sectionbox.value = snapshot.val().Section;
+                    emailaddressbox.value = snapshot.val().EmailAddress;
+                    addressbox.value = snapshot.val().Address;
+                    mobilenobox.value = snapshot.val().MobileNo;
+                    passwordbox.value = snapshot.val().Password;
+                    genbox.value = snapshot.val().Gender;
+      
+              }
+              else{
+                  alert("No data found")
+              }
+          })
+          .catch((error)=>{
+              alert("unseccesful, error"+ error);
+          });
+      }
+
+      // update data function
+
+      function UpdateData(){
+            update(ref(db, "TheStudents/"+ rollbox.value),{
+                Nameofstd: namebox.value,
+                Middlenameofstd: middlenamebox.value,
+                Lastnameofstd: lastnamebox.value,
+                Section: sectionbox.value,
+                EmailAddress: emailaddressbox.value,
+                Address: addressbox.value,
+                MobileNo: mobilenobox.value,
+                Password: passwordbox.value,
+                Section: secbox.value,
+                Gender: genbox.value
+            })
+            .then(()=>{
+                alert("data update succesfully");
+            })
+            .catch((error)=>{
+                alert("unsuccesful, error" + error)
+            });
+        }
+
+        // delete function
+
+        function DeleteData(){
+          remove(ref(db, "TheStudents/"+ rollbox.value))
+          .then(()=>{
+              alert("data removed succesfully");
+          })
+          .catch((error)=>{
+              alert("unseccesful, error"+ error);
+          });
+      }
+
+        // Aasign event button
+        insBtn.addEventListener('click', InsertData);
+        selBtn.addEventListener('click', SelectData);
+        updBtn.addEventListener('click', UpdateData);
+        delBtn.addEventListener('click', DeleteData);
+
+      </script>
+
+
+  </body>
+</html>
